@@ -7,6 +7,7 @@ use App\Models\Admin;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Controllers\Controller;
+use App\Jobs\SendTaskCreatedEmail;
 
 class TaskController extends Controller
 {
@@ -48,15 +49,20 @@ class TaskController extends Controller
     {
         $formattedTimer = sprintf('%02d:00:00', $request->timer);
     
-        Task::create([
+        $task = Task::create([
             'admin_id' => $request->admin_id,
             'title' => $request->title,
             'description' => $request->description,
             'timer' => $formattedTimer,
         ]);
     
+        $admin = Admin::find($request->admin_id);
+    
+        SendTaskCreatedEmail::dispatch($admin, $task);
+    
         return redirect()->route('tasks.index')->with('success', 'تم حفظ المهمة بنجاح');
     }
+    
     
 
     public function review(Request $request, Task $task)
