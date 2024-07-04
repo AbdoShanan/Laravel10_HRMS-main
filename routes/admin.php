@@ -18,6 +18,8 @@ use App\Http\Controllers\Admin\ReligionController;
 use App\Http\Controllers\Admin\EmployeesController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\PermissionController;
+use App\Http\Controllers\Admin\TaskController;
+
 
 
 
@@ -144,7 +146,12 @@ Route::group([ 'prefix' => 'admin' , 'middleware' => ['auth:admin']], function()
     Route::put('admins/{admin}', [AdminController::class, 'update'])->name('admins.update');
     Route::delete('admins/{admin}', [AdminController::class, 'destroy'])->name('admins.destroy');
 
+    Route::get('tasks', [TaskController::class, 'index'])->name('tasks.index');
+    Route::get('tasks/create', [TaskController::class, 'create'])->name('tasks.create');
+    Route::post('tasks', [TaskController::class, 'store'])->name('tasks.store');
+    Route::post('tasks/{task}/review', [TaskController::class, 'review'])->name('tasks.review');
 
+    Route::post('tasks/{task}', [TaskController::class, 'update'])->name('tasks.update');
     });
 
 

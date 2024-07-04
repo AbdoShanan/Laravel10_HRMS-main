@@ -240,6 +240,28 @@
         @endcan
 
 
+        @can(' المهام')
+
+        <li class="nav-item has-treeview {{ (request()->is('admin/tasks*')) ? 'menu-open' : '' }}">
+          <a href="#" class="nav-link {{ (request()->is('admin/tasks*')) ? 'active' : '' }}">
+            <i class="nav-icon fas fa-lock"></i>
+            <p>
+              المهام
+              <i class="right fas fa-angle-left"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="{{ route('tasks.index') }}" class="nav-link {{ (request()->is('admin/tasks*')) ? 'active' : '' }}">
+                <i class="far fa-circle nav-icon"></i>
+                <p>إدارة المهام</p>
+              </a>
+            </li>
+          </ul>
+        </li>
+        @endcan
+
+
       </ul>
     </nav>
     <!-- /.sidebar-menu -->
