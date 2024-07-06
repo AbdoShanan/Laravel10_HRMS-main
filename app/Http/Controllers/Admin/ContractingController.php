@@ -69,9 +69,13 @@ class ContractingController extends Controller
     }
 
     public function update(Request $request, Contracting $contracting)
-    {
-        $oldTimer = $contracting->timer; 
-        $newTimer = $request->timer; 
+    { 
+        $oldTimer = $contracting->timer;
+        $newTimer = $request->timer;
+    
+        if (!$newTimer) {
+            return redirect()->back()->withInput()->withErrors(['timer' => 'Timer value is required']);
+        }
     
         try {
             if (strpos($newTimer, ':') === false) {
@@ -97,11 +101,13 @@ class ContractingController extends Controller
     
             session()->flash('timer_stopped', true);
     
-            return redirect()->route('contractings.index')->with('success', 'تم تحديث حالة المهمة والمؤقت بنجاح.');
+            return redirect()->route('contractings.index')->with('success', 'تحديث حالة المهمة والمؤقت بنجاح, سيتم تقييم التاسك من قبل المدير');
         } catch (\Exception $e) {
             return redirect()->back()->withInput()->withErrors(['timer' => 'Invalid time format provided']);
         }
     }
+    
+    
 
     public function extend(Request $request, Contracting $contracting)
     {

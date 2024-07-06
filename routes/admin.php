@@ -160,8 +160,8 @@ Route::group([ 'prefix' => 'admin' , 'middleware' => ['auth:admin']], function()
     Route::post('contracting', [ContractingController::class, 'store'])->name('contractings.store');
     Route::post('contracting/{contracting}/review', [ContractingController::class, 'review'])->name('contractings.review');
     Route::post('contracting/{contracting}', [ContractingController::class, 'update'])->name('contractings.update');
-    Route::post('contracting/{contracting}', [ContractingController::class, 'update'])->name('contractings.update');
     Route::post('contractings/{contracting}/extend', [ContractingController::class, 'extend'])->name('contractings.extend');
+
 
     });
 

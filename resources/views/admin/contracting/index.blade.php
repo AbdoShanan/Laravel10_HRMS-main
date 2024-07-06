@@ -29,9 +29,7 @@
                         <th>وقت التاسك</th>
                         <th>التقييم ( 1 إلى 5)</th>
                         <th>حالة التاسك</th>
-                        @if ((auth()->user()->isAdmin() || auth()->user()->isSuperAdmin() || auth()->user()->isManager()))
-                            <th>الإجراءات</th>
-                        @endif
+                        <th>الإجراءات</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -47,19 +45,12 @@
                             <td>{{ $task->review ?? 'لم يتم تقييم التاسك' }}</td>
                             <td>{{ $task->status }}</td>
 
-                            @if ((auth()->user()->isAdmin() || auth()->user()->isSuperAdmin() || auth()->user()->isManager()))
+                            @if (auth()->user()->isAdmin() || auth()->user()->isSuperAdmin() || auth()->user()->isManager())
                                 <td>
-                                    <button type="button" class="btn btn-success start-timer-btn" data-task-id="{{ $task->id }}" {{ $task->review ? 'disabled' : '' }}>ابدأ المؤقت</button>
-                                    <form action="{{ route('contractings.update', $task->id) }}" method="POST" class="d-inline">
-                                        @csrf
-                                        @method('POST')
-                                        <button type="submit" class="btn btn-danger stop-timer-btn" data-task-id="{{ $task->id }}" {{ $task->review ? 'disabled' : '' }}>إيقاف المؤقت</button>
-                                        <input type="hidden" name="timer" id="hidden-timer-{{ $task->id }}" value="{{ $task->timer }}">
-                                    </form>
-                                    @if (($task->timer === "00:00:00" || session('timer_stopped')))
-                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#reviewModal{{ $task->id }}" {{ $task->review ? 'disabled' : '' }}>
-                                            تقييم التاسك
-                                        </button>
+                                    @if($task->status === "pending")
+                                    <button type="button" class="btn btn-primary" id="reviewBtn-{{ $task->id }}" data-toggle="modal" data-target="#reviewModal{{ $task->id }}" {{ $task->review ? 'disabled' : '' }}>
+                                        تقييم التاسك
+                                    </button>
                                     @endif
                                     <button type="button" class="btn btn-info" data-toggle="modal" data-target="#extensionDetailsModal{{ $task->id }}">
                                         عرض تفاصيل التمديد
@@ -69,19 +60,20 @@
                                 <td>
                                     @if ($task->status === 'closed')
                                         <button type="button" class="btn btn-warning" disabled>تمديد الوقت</button>
-                                        <form action="" method="POST" class="d-inline">
-                                            @csrf
-                                            <button type="submit" class="btn btn-primary" disabled>الإنتهاء من التاسك</button>
-                                        </form>
                                     @else
+                                        <button type="button" class="btn btn-success start-timer-btn" data-task-id="{{ $task->id }}" {{ $task->review ? 'disabled' : '' }}>ابدأ المؤقت</button>
                                         <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#extendModal{{ $task->id }}">تمديد الوقت</button>
-                                        <form action="" method="POST" class="d-inline">
+                                        <form action="{{ route('contractings.update', $task->id) }}" method="POST" class="d-inline">
                                             @csrf
-                                            <button type="submit" class="btn btn-primary">الإنتهاء من التاسك</button>
+                                            @method('POST')
+                                            <button type="submit" class="btn btn-danger stop-timer-btn d-none" id="completeBtn-{{ $task->id }}" data-task-id="{{ $task->id }}" {{ $task->review ? 'disabled' : '' }}> الإنتهاء من التاسك</button>
+                                            <input type="hidden" name="timer" id="hidden-timer-{{ $task->id }}" value="{{ $task->timer }}">
                                         </form>
+
                                     @endif
                                 </td>
                             @endif
+
                         </tr>
                     @endforeach
                 </tbody>
@@ -219,7 +211,6 @@
 
         function stopTimer(taskId) {
             clearInterval(timers[taskId]);
-
             $('#hidden-timer-' + taskId).val($('#timer-' + taskId).text());
 
             if ({{ auth()->user()->isAdmin() || auth()->user()->isSuperAdmin() || auth()->user()->isManager() ? 'true' : 'false' }}) {
@@ -230,17 +221,16 @@
         function formatTime(hours, minutes, seconds) {
             return hours + ':' + (minutes < 10 ? '0' : '') + minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
         }
-
         $(document).on('click', '.start-timer-btn', function() {
             var taskId = $(this).data('task-id');
-            startTimer(taskId);
+            $('#completeBtn-' + taskId).removeClass('d-none'); 
+            startTimer(taskId); 
         });
+
 
         $(document).on('click', '.stop-timer-btn', function() {
             var taskId = $(this).data('task-id');
             stopTimer(taskId);
-
-            $('#hidden-timer-' + taskId).val($('#timer-' + taskId).text());
 
             $(this).closest('form').submit();
         });
