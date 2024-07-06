@@ -261,6 +261,27 @@
         </li>
         @endcan
 
+        @can(' المقاولات')
+
+          <li class="nav-item has-treeview {{ (request()->is('admin/contracting*')) ? 'menu-open' : '' }}">
+            <a href="#" class="nav-link {{ (request()->is('admin/contracting*')) ? 'active' : '' }}">
+              <i class="nav-icon fas fa-lock"></i>
+              <p>
+              المقاولات
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{ route('contractings.index') }}" class="nav-link {{ (request()->is('admin/contracting*')) ? 'active' : '' }}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>إدارة المقاولات</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          @endcan
+
 
       </ul>
     </nav>
