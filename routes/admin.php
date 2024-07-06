@@ -19,6 +19,8 @@ use App\Http\Controllers\Admin\EmployeesController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\TaskController;
+use App\Http\Controllers\Admin\ContractingController;
+
 
 
 
@@ -145,13 +147,22 @@ Route::group([ 'prefix' => 'admin' , 'middleware' => ['auth:admin']], function()
     Route::get('admins/{admin}/edit', [AdminController::class, 'edit'])->name('admins.edit');
     Route::put('admins/{admin}', [AdminController::class, 'update'])->name('admins.update');
     Route::delete('admins/{admin}', [AdminController::class, 'destroy'])->name('admins.destroy');
-
+     /* المهام */
     Route::get('tasks', [TaskController::class, 'index'])->name('tasks.index');
     Route::get('tasks/create', [TaskController::class, 'create'])->name('tasks.create');
     Route::post('tasks', [TaskController::class, 'store'])->name('tasks.store');
     Route::post('tasks/{task}/review', [TaskController::class, 'review'])->name('tasks.review');
-
     Route::post('tasks/{task}', [TaskController::class, 'update'])->name('tasks.update');
+
+     /* المقاولات */
+    Route::get('contracting', [ContractingController::class, 'index'])->name('contractings.index');
+    Route::get('contracting/create', [ContractingController::class, 'create'])->name('contractings.create');
+    Route::post('contracting', [ContractingController::class, 'store'])->name('contractings.store');
+    Route::post('contracting/{contracting}/review', [ContractingController::class, 'review'])->name('contractings.review');
+    Route::post('contracting/{contracting}', [ContractingController::class, 'update'])->name('contractings.update');
+    Route::post('contractings/{contracting}/extend', [ContractingController::class, 'extend'])->name('contractings.extend');
+
+
     });
 
 
