@@ -14,7 +14,7 @@
 
     <div class="card">
         <div class="card-header">
-            @can('إضافة مهمة جديدة')
+            @can('إضافة مهمة مقاولات جديدة')
                 <a href="{{ route('contractings.create') }}" class="btn btn-primary float-right">إضافة مهمة جديدة</a>
             @endcan
         </div>
