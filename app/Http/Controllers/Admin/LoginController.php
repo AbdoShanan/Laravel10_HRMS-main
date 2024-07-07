@@ -8,6 +8,7 @@ use App\Http\Requests\LoginRequest;
 use Illuminate\Http\Request;
 use App\Http\Requests\RegisterRequest;
 use Illuminate\Support\Facades\Hash;
+use App\Models\Attendance;
 
 class LoginController extends Controller
 {
@@ -27,10 +28,16 @@ class LoginController extends Controller
      Admin::create($admin);
 */
     }
-    public function login(LoginRequest $request)
+
+   public function login(Request $request)
     {
         if (auth()->guard('admin')->attempt(['username' => $request->input('username'), 'password' => $request->input('password')])) {
             if (auth()->guard('admin')->user()->active == 1) {
+                Attendance::create([
+                    'admin_id' => auth()->guard('admin')->id(),
+                    'login_time' => now(),
+                ]);
+
                 return redirect()->route('admin.dashboard');
             } else {
                 auth()->guard('admin')->logout();
@@ -40,11 +47,24 @@ class LoginController extends Controller
             return redirect()->route('admin.showlogin')->with(['error' => 'عفوا بيانات التسجيل غير صحيحة !!']);
         }
     }
-    
-    public function logout(){
-      auth()->logout();
-      return redirect()->route('admin.showlogin');  
+
+    public function logout(Request $request)
+    {
+        $attendance = Attendance::where('admin_id', auth()->guard('admin')->id())
+            ->whereNull('logout_time')
+            ->latest()
+            ->first();
+        if ($attendance) {
+
+            $attendance->update([
+                'logout_time' => now(),
+            ]);
+        }
+
+        auth()->guard('admin')->logout();
+        return redirect()->route('admin.showlogin');
     }
+
 
     public function show_register_view()
     {
