@@ -22,6 +22,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
   @yield('css')
 </head>
 <body class="hold-transition sidebar-mini">
+<div  style="padding: 20px; color: white;" hidden>
+        <h3>Session expires in <span id="time">01:00</span></h3>
+</div>
 <div class="wrapper">
 
   <!-- Navbar -->
@@ -62,6 +65,37 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <!-- AdminLTE App -->
 <script src="{{ asset('assets/admin/dist/js/adminlte.min.js') }}"></script>
 <script src="{{ asset('assets/admin/js/General.js') }}"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        let timer = 480 * 60; 
+        const display = document.querySelector('#time');
+        const logoutUrl = "{{ route('admin.logout') }}";
+        function startTimer(duration, display) {
+            let remainingTime = duration;
+
+            function timerFunction() {
+                let minutes = Math.floor(remainingTime / 60);
+                let seconds = remainingTime % 60;
+
+                minutes = minutes < 10 ? "0" + minutes : minutes;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+
+                display.textContent = minutes + ":" + seconds;
+
+                if (remainingTime <= 0) {
+                    window.location.href = logoutUrl;
+                } else {
+                    remainingTime--;
+                }
+            }
+
+            timerFunction();
+            setInterval(timerFunction, 1000);
+        }
+
+        startTimer(timer, display);
+    });
+</script>
 @yield('script')
 
 

@@ -20,7 +20,7 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\TaskController;
 use App\Http\Controllers\Admin\ContractingController;
-
+use App\Http\Controllers\Admin\AttendanceController;
 
 
 
@@ -162,6 +162,7 @@ Route::group([ 'prefix' => 'admin' , 'middleware' => ['auth:admin']], function()
     Route::post('contracting/{contracting}', [ContractingController::class, 'update'])->name('contractings.update');
     Route::post('contractings/{contracting}/extend', [ContractingController::class, 'extend'])->name('contractings.extend');
 
+    Route::get('attendances', [AttendanceController::class, 'index'])->name('attendances.index');
 
     });
 

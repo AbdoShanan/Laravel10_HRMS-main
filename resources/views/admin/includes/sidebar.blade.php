@@ -282,7 +282,29 @@
           </li>
           @endcan
 
+          @if (auth()->user()->isAdmin() || auth()->user()->isSuperAdmin() || auth()->user()->isManager())
 
+            @can(' الحضور و الإنصراف')
+
+              <li class="nav-item has-treeview {{ (request()->is('admin/attendances*')) ? 'menu-open' : '' }}">
+                <a href="#" class="nav-link {{ (request()->is('admin/attendances*')) ? 'active' : '' }}">
+                  <i class="nav-icon fas fa-lock"></i>
+                  <p>
+                  الحضور والإنصراف
+                    <i class="right fas fa-angle-left"></i>
+                  </p>
+                </a>
+                <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                    <a href="{{ route('attendances.index') }}" class="nav-link {{ (request()->is('admin/attendances*')) ? 'active' : '' }}">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p> عرض الحضور والإنصراف</p>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              @endcan
+          @endif
       </ul>
     </nav>
     <!-- /.sidebar-menu -->
