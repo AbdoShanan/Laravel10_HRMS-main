@@ -24,7 +24,7 @@ use App\Http\Controllers\Admin\AttendanceController;
 use App\Http\Controllers\Admin\AdministrationStaffController;
 use App\Http\Controllers\Admin\AdditionalSalaryController;
 use App\Http\Controllers\Admin\AllowanceSalaryController;
-
+use App\Http\Controllers\Admin\SalaryDeductionController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -143,6 +143,12 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth:admin'], function () {
     Route::get('/allowance_salary/index', [AllowanceSalaryController::class, 'index'])->name('allowance_salary.index');
     Route::get('/allowance_salary/create', [AllowanceSalaryController::class, 'create'])->name('allowance_salary.create');
     Route::post('/allowance_salary/store', [AllowanceSalaryController::class, 'store'])->name('allowance_salary.store');
+
+    /* انواع الخصم للراتب */
+    Route::get('/salary_deductions', [SalaryDeductionController::class, 'index'])->name('salary_deductions.index');
+    Route::get('/salary_deductions/create', [SalaryDeductionController::class, 'create'])->name('salary_deductions.create');
+    Route::post('/salary_deductions', [SalaryDeductionController::class, 'store'])->name('salary_deductions.store');
+
 
 });
 

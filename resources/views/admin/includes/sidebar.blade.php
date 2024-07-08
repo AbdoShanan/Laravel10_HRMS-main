@@ -130,8 +130,8 @@
             @endcan
 
         @can('قائمة شئون الموظفين')
-        <li class="nav-item has-treeview    {{ ( request()->is('admin/Employees*') || request()->is('admin/Administration_staff*') || request()->is('admin/employees_additional_salary*') || request()->is('admin/allowance_salary*')) ? 'menu-open':'' }} ">
-          <a href="#" class="nav-link {{ ( request()->is('admin/Employees*') || request()->is('admin/Administration_staff*') || request()->is('admin/employees_additional_salary*' ) || request()->is('admin/allowance_salary*')) ? 'active':'' }} ">
+        <li class="nav-item has-treeview    {{ ( request()->is('admin/Employees*') || request()->is('admin/Administration_staff*') || request()->is('admin/employees_additional_salary*') || request()->is('admin/allowance_salary*')|| request()->is('admin/salary_deductions*')) ? 'menu-open':'' }} ">
+          <a href="#" class="nav-link {{ ( request()->is('admin/Employees*') || request()->is('admin/Administration_staff*') || request()->is('admin/employees_additional_salary*' ) || request()->is('admin/allowance_salary*')|| request()->is('admin/salary_deductions*')) ? 'active':'' }} ">
             <i class="nav-icon fas fa-tachometer-alt"></i>
             <p>
              قائمة شئون الموظفين
@@ -168,7 +168,7 @@
 
             @can('انواع الخصم للراتب')
             <li class="nav-item">
-              <a href="{{ route('admin_panel_settings.index') }}" class="nav-link {{ (request()->is('admin/generalSettings*'))?'active':'' }}">
+              <a href="{{ route('salary_deductions.index') }}" class="nav-link {{ (request()->is('admin/salary_deductions*'))?'active':'' }}">
                 <i class="far fa-circle nav-icon"></i>
                 <p> انواع الخصم للراتب</p>
               </a>
