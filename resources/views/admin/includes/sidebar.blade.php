@@ -273,7 +273,6 @@
 
           @if (auth()->user()->isAdmin() || auth()->user()->isSuperAdmin() || auth()->user()->isManager())
 
-            @can(' الحضور و الإنصراف')
 
               <li class="nav-item has-treeview {{ (request()->is('admin/attendances*')) ? 'menu-open' : '' }}">
                 <a href="#" class="nav-link {{ (request()->is('admin/attendances*')) ? 'active' : '' }}">
@@ -292,7 +291,6 @@
                   </li>
                 </ul>
               </li>
-              @endcan
           @endif
       </ul>
     </nav>
