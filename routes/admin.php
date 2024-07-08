@@ -21,7 +21,7 @@ use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\TaskController;
 use App\Http\Controllers\Admin\ContractingController;
 use App\Http\Controllers\Admin\AttendanceController;
-
+use App\Http\Controllers\Admin\AdministrationStaffController;
 
 
 
@@ -128,6 +128,10 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth:admin'], function () {
     Route::post("/Employees/get_governorates", [EmployeesController::class, 'get_governorates'])->name('Employees.get_governorates');
     Route::post("/Employees/get_centers", [EmployeesController::class, 'get_centers'])->name('Employees.get_centers');
 
+    /*  بداية  بيانات موظفين الإدارة   */
+    Route::get('/Administration_staff/index', [AdministrationStaffController::class, 'index'])->name('Administration_staff.index');
+    Route::get('/Administration_staff/create', [AdministrationStaffController::class, 'create'])->name('Administration_staff.create');
+    Route::post('/Administration_staff/store', [AdministrationStaffController::class, 'store'])->name('Administration_staff.store');
 });
 
 

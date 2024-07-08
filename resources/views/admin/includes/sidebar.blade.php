@@ -130,8 +130,8 @@
             @endcan
 
         @can('قائمة شئون الموظفين')
-        <li class="nav-item has-treeview    {{ ( request()->is('admin/Employees*')) ? 'menu-open':'' }} ">
-          <a href="#" class="nav-link {{ ( request()->is('admin/Employees*')  ) ? 'active':'' }} ">
+        <li class="nav-item has-treeview    {{ ( request()->is('admin/Employees*') || request()->is('admin/Administration_staff*')) ? 'menu-open':'' }} ">
+          <a href="#" class="nav-link {{ ( request()->is('admin/Employees*') || request()->is('admin/Administration_staff*') ) ? 'active':'' }} ">
             <i class="nav-icon fas fa-tachometer-alt"></i>
             <p>
              قائمة شئون الموظفين
@@ -150,8 +150,8 @@
 
             @can('بيانات موظفين الادارة')
             <li class="nav-item">
-              <a href="{{ route('admin_panel_settings.index') }}" class="nav-link {{ (request()->is('admin/generalSettings*'))?'active':'' }}">
-                <i class="far fa-circle nav-icon"></i>
+            <a href="{{ route('Administration_staff.index') }}" class="nav-link {{ (request()->is('admin/Administration_staff*'))?'active':'' }}">
+            <i class="far fa-circle nav-icon"></i>
                 <p> بيانات موظفين الادارة</p>
               </a>
             </li>
