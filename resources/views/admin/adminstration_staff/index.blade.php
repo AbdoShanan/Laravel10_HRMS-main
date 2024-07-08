@@ -17,9 +17,11 @@
     <div class="card">
         <div class="card-header">
             <h3 class="card-title">بيانات موظفين الإدارة</h3>
+            @can('إضافة موظف للإدارة')
             <div class="card-tools">
-                <a href="{{ route('Administration_staff.create') }}" class="btn btn-success btn-sm">إضافة موظف جديد</a>
+                <a href="{{ route('Administration_staff.create') }}" class="btn btn-success btn-sm">إضافة موظف للإدارة </a>
             </div>
+            @endcan
         </div>
         <!-- /.card-header -->
         <div class="card-body table-responsive p-0">
