@@ -183,15 +183,6 @@
               </a>
             </li>
             @endcan
-            
-            @can('هواتف الموظفين')
-            <li class="nav-item">
-              <a href="{{ route('admin_panel_settings.index') }}" class="nav-link {{ (request()->is('admin/generalSettings*'))?'active':'' }}">
-                <i class="far fa-circle nav-icon"></i>
-                <p>   هواتف الموظفين</p>
-              </a>
-            </li>
-            @endcan
 
           </ul>
         </li>
