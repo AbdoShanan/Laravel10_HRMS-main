@@ -21,10 +21,10 @@ use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\TaskController;
 use App\Http\Controllers\Admin\ContractingController;
 use App\Http\Controllers\Admin\AttendanceController;
-
-
-
-
+use App\Http\Controllers\Admin\AdministrationStaffController;
+use App\Http\Controllers\Admin\AdditionalSalaryController;
+use App\Http\Controllers\Admin\AllowanceSalaryController;
+use App\Http\Controllers\Admin\SalaryDeductionController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -127,6 +127,28 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth:admin'], function () {
     Route::get('/Employees/destroy/{id}', [EmployeesController::class, 'destroy'])->name('Employees.destroy');
     Route::post("/Employees/get_governorates", [EmployeesController::class, 'get_governorates'])->name('Employees.get_governorates');
     Route::post("/Employees/get_centers", [EmployeesController::class, 'get_centers'])->name('Employees.get_centers');
+
+    /*  بداية  بيانات موظفين الإدارة   */
+    Route::get('/Administration_staff/index', [AdministrationStaffController::class, 'index'])->name('Administration_staff.index');
+    Route::get('/Administration_staff/create', [AdministrationStaffController::class, 'create'])->name('Administration_staff.create');
+    Route::post('/Administration_staff/store', [AdministrationStaffController::class, 'store'])->name('Administration_staff.store');
+
+    
+    /*      انواع الاضافي للراتب    */
+    Route::get('/employees_additional_salary/index', [AdditionalSalaryController::class, 'index'])->name('additional_salary.index');
+    Route::get('/employees_additional_salary/create', [AdditionalSalaryController::class, 'create'])->name('additional_salary.create');
+    Route::post('/employees_additional_salary/store', [AdditionalSalaryController::class, 'store'])->name('additional_salary.store');
+    
+    /* انواع البدلات للراتب */
+    Route::get('/allowance_salary/index', [AllowanceSalaryController::class, 'index'])->name('allowance_salary.index');
+    Route::get('/allowance_salary/create', [AllowanceSalaryController::class, 'create'])->name('allowance_salary.create');
+    Route::post('/allowance_salary/store', [AllowanceSalaryController::class, 'store'])->name('allowance_salary.store');
+
+    /* انواع الخصم للراتب */
+    Route::get('/salary_deductions', [SalaryDeductionController::class, 'index'])->name('salary_deductions.index');
+    Route::get('/salary_deductions/create', [SalaryDeductionController::class, 'create'])->name('salary_deductions.create');
+    Route::post('/salary_deductions', [SalaryDeductionController::class, 'store'])->name('salary_deductions.store');
+
 
 });
 

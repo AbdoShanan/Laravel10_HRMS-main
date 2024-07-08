@@ -19,15 +19,16 @@ class Finance_calenders_Request extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array|string>
      */
-    public function rules(): array 
+    public function rules(): array
     {
         return [
-        'FINANCE_YR'=>'required|unique:finance_calenders',
-        'FINANCE_YR_DESC'=>'required' ,
-        'start_date'=>'required',
-        'end_date'=>'required|gt:start_date'
+            'FINANCE_YR' => 'required|unique:finance_calenders',
+            'FINANCE_YR_DESC' => 'required',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after:start_date',
         ];
     }
+    
     public function messages(): array
     {
         return [
@@ -35,7 +36,9 @@ class Finance_calenders_Request extends FormRequest
      'FINANCE_YR.unique'=>'كود السنة مسجل من قبل ',
      'FINANCE_YR_DESC'=>'وصف السنة المالية مطلوب',
      'start_date.required'=>'تاريخ بداية السنة المالية مطلوب',
-     'end_date.required'=>'تاريخ نهاية السنة المالية مطلوب'
+     'end_date.required'=>'تاريخ نهاية السنة المالية مطلوب' ,
+     'end_date.after'=> 'تاريخ نهاية السنة المالية يجب ان يكون بعد تاريخ بداية السنة المالية'
+
 
         ];
 

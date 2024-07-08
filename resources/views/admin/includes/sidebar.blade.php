@@ -130,8 +130,8 @@
             @endcan
 
         @can('قائمة شئون الموظفين')
-        <li class="nav-item has-treeview    {{ ( request()->is('admin/Employees*')) ? 'menu-open':'' }} ">
-          <a href="#" class="nav-link {{ ( request()->is('admin/Employees*')  ) ? 'active':'' }} ">
+        <li class="nav-item has-treeview    {{ ( request()->is('admin/Employees*') || request()->is('admin/Administration_staff*') || request()->is('admin/employees_additional_salary*') || request()->is('admin/allowance_salary*')|| request()->is('admin/salary_deductions*')) ? 'menu-open':'' }} ">
+          <a href="#" class="nav-link {{ ( request()->is('admin/Employees*') || request()->is('admin/Administration_staff*') || request()->is('admin/employees_additional_salary*' ) || request()->is('admin/allowance_salary*')|| request()->is('admin/salary_deductions*')) ? 'active':'' }} ">
             <i class="nav-icon fas fa-tachometer-alt"></i>
             <p>
              قائمة شئون الموظفين
@@ -150,8 +150,8 @@
 
             @can('بيانات موظفين الادارة')
             <li class="nav-item">
-              <a href="{{ route('admin_panel_settings.index') }}" class="nav-link {{ (request()->is('admin/generalSettings*'))?'active':'' }}">
-                <i class="far fa-circle nav-icon"></i>
+            <a href="{{ route('Administration_staff.index') }}" class="nav-link {{ (request()->is('admin/Administration_staff*'))?'active':'' }}">
+            <i class="far fa-circle nav-icon"></i>
                 <p> بيانات موظفين الادارة</p>
               </a>
             </li>
@@ -159,7 +159,7 @@
 
             @can('انواع الاضافي للراتب')
             <li class="nav-item">
-              <a href="{{ route('admin_panel_settings.index') }}" class="nav-link {{ (request()->is('admin/generalSettings*'))?'active':'' }}">
+              <a href="{{ route('additional_salary.index') }}" class="nav-link {{ (request()->is('admin/employees_additional_salary*'))?'active':'' }}">
                 <i class="far fa-circle nav-icon"></i>
                 <p> انواع الاضافي للراتب</p>
               </a>
@@ -168,7 +168,7 @@
 
             @can('انواع الخصم للراتب')
             <li class="nav-item">
-              <a href="{{ route('admin_panel_settings.index') }}" class="nav-link {{ (request()->is('admin/generalSettings*'))?'active':'' }}">
+              <a href="{{ route('salary_deductions.index') }}" class="nav-link {{ (request()->is('admin/salary_deductions*'))?'active':'' }}">
                 <i class="far fa-circle nav-icon"></i>
                 <p> انواع الخصم للراتب</p>
               </a>
@@ -177,18 +177,9 @@
 
             @can('انواع البدلات للراتب')
             <li class="nav-item">
-              <a href="{{ route('admin_panel_settings.index') }}" class="nav-link {{ (request()->is('admin/generalSettings*'))?'active':'' }}">
+              <a href="{{ route('allowance_salary.index') }}" class="nav-link {{ (request()->is('admin/allowance_salary*'))?'active':'' }}">
                 <i class="far fa-circle nav-icon"></i>
                 <p> انواع البدلات للراتب</p>
-              </a>
-            </li>
-            @endcan
-            
-            @can('هواتف الموظفين')
-            <li class="nav-item">
-              <a href="{{ route('admin_panel_settings.index') }}" class="nav-link {{ (request()->is('admin/generalSettings*'))?'active':'' }}">
-                <i class="far fa-circle nav-icon"></i>
-                <p>   هواتف الموظفين</p>
               </a>
             </li>
             @endcan
@@ -219,9 +210,8 @@
         @endcan
 
         @can(' الصلاحيات')
-
-        <li class="nav-item has-treeview {{ (request()->is('admin/Permissions*')) ? 'menu-open' : '' }}">
-          <a href="#" class="nav-link {{ (request()->is('admin/Permissions*')) ? 'active' : '' }}">
+        <li class="nav-item has-treeview {{ (request()->is('admin/permissions*')) ? 'menu-open' : '' }}">
+          <a href="#" class="nav-link {{ (request()->is('admin/permissions*')) ? 'active' : '' }}">
             <i class="nav-icon fas fa-lock"></i>
             <p>
               الصلاحيات
@@ -230,7 +220,7 @@
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="{{ route('permissions.index') }}" class="nav-link {{ (request()->is('admin/Permissions*')) ? 'active' : '' }}">
+              <a href="{{ route('permissions.index') }}" class="nav-link {{ (request()->is('admin/permissions*')) ? 'active' : '' }}">
                 <i class="far fa-circle nav-icon"></i>
                 <p>إدارة الصلاحيات</p>
               </a>
@@ -238,7 +228,6 @@
           </ul>
         </li>
         @endcan
-
 
         @can(' المهام')
 

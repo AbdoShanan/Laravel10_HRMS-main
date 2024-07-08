@@ -34,9 +34,18 @@ class Admin extends Authenticatable
         return in_array('manager', $this->roles_name);
     }
 
-    // Relationship with tasks
     public function tasks()
     {
         return $this->hasMany(Task::class, 'admin_id', 'id');
+    }
+
+    public function additionalSalary()
+    {
+        return $this->hasOne(AdditionalSalary::class);
+    }
+
+    public function allowanceSalary()
+    {
+        return $this->hasOne(AllowanceSalary::class);
     }
 }

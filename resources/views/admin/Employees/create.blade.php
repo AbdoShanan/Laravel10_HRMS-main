@@ -57,15 +57,6 @@
          
                <div class="col-md-4">
                   <div class="form-group">
-                     <label>    كود بصمة الموظف</label>
-                     <input autofocus type="text" name="zketo_code" id="zketo_code" class="form-control" value="{{ old('zketo_code') }}" >
-                     @error('zketo_code')
-                     <span class="text-danger">{{ $message }}</span> 
-                     @enderror
-                  </div>
-               </div>
-               <div class="col-md-4">
-                  <div class="form-group">
                      <label>    اسم الموظف  كاملا</label>
                      <input type="text" name="emp_name" id="emp_name" class="form-control" value="{{ old('emp_name') }}" >
                      @error('emp_name')
@@ -88,14 +79,7 @@
                <div class="col-md-4">
                   <div class="form-group">
                      <label>   الفرع التابع له الموظف</label>
-                     <select name="branch_id " id="branch_id " class="form-control select2 ">
-                        <option value="">اختر الفرع</option>
-                        @if (@isset($other['branches']) && !@empty($other['branches']))
-                        @foreach ($other['branches'] as $info )
-                        <option @if(old('branches')==$info->id) selected="selected" @endif value="{{ $info->id }}"> {{ $info->name }} </option>
-                        @endforeach
-                        @endif
-                     </select>
+                     <input type="text" name="branch_id" id="branch_id" class="form-control" value="{{ old('branch_id') }}" >
                      @error('branch_id')
                      <span class="text-danger">{{ $message }}</span>
                      @enderror
@@ -108,14 +92,8 @@
                <div class="col-md-4">
                   <div class="form-group">
                      <label>  المؤهل الدراسي</label>
-                     <select name="Qualifications_id" id="Qualifications_id  " class="form-control select2 ">
-                        <option value="">اختر المؤهل</option>
-                        @if (@isset($other['qualifications']) && !@empty($other['qualifications']))
-                        @foreach ($other['qualifications'] as $info )
-                        <option @if(old('Qualifications_id')==$info->id) selected="selected" @endif value="{{ $info->id }}"> {{ $info->name }} </option>
-                        @endforeach
-                        @endif
-                     </select>
+                     <input type="text" name="Qualifications_id" id="Qualifications_id" class="form-control" value="{{ old('Qualifications_id') }}" >
+
                      @error('Qualifications_id')
                      <span class="text-danger">{{ $message }}</span>
                      @enderror
@@ -200,14 +178,8 @@
                <div class="col-md-4">
                   <div class="form-group">
                      <label>   فصيلة الدم</label>
-                     <select name="blood_group_id" id="blood_group_id" class="form-control select2 ">
-                        <option value="">اختر الفصيلة</option>
-                        @if (@isset($other['blood_groups']) && !@empty($other['blood_groups']))
-                        @foreach ($other['blood_groups'] as $info )
-                        <option @if(old('blood_group_id')==$info->id) selected="selected" @endif value="{{ $info->id }}"> {{ $info->name }} </option>
-                        @endforeach
-                        @endif
-                     </select>
+                     <input type="text" name="blood_group_id" id="blood_group_id" class="form-control" value="{{ old('blood_group_id') }}" >
+
                      @error('blood_group_id')
                      <span class="text-danger">{{ $message }}</span>
                      @enderror
@@ -216,14 +188,16 @@
                <div class="col-md-4">
                   <div class="form-group">
                      <label>    الجنسية</label>
-                     <select name="emp_nationality_id" id="emp_nationality_id" class="form-control select2 ">
+                     <!-- <select name="emp_nationality_id" id="emp_nationality_id" class="form-control select2 ">
                         <option value="">اختر الجنسية</option>
                         @if (@isset($other['nationalities']) && !@empty($other['nationalities']))
                         @foreach ($other['nationalities'] as $info )
                         <option @if(old('emp_nationality_id')==$info->id) selected="selected" @endif value="{{ $info->id }}"> {{ $info->name }} </option>
                         @endforeach
                         @endif
-                     </select>
+                     </select> -->
+                     <input type="text" name="emp_nationality_id" id="emp_nationality_id" class="form-control" value="{{ old('emp_nationality_id') }}" >
+
                      @error('emp_nationality_id')
                      <span class="text-danger">{{ $message }}</span>
                      @enderror
@@ -232,14 +206,16 @@
                <div class="col-md-4">
                   <div class="form-group">
                      <label>  اللغة الاساسية التي يتحدث بها</label>
-                     <select name="emp_lang_id  " id="emp_lang_id  " class="form-control select2 ">
+                     <!-- <select name="emp_lang_id  " id="emp_lang_id  " class="form-control select2 ">
                         <option value="">اختر الوظيفة</option>
                         @if (@isset($other['languages']) && !@empty($other['languages']))
                         @foreach ($other['languages'] as $info )
                         <option @if(old('emp_lang_id')==$info->id) selected="selected" @endif value="{{ $info->id }}"> {{ $info->name }} </option>
                         @endforeach
                         @endif
-                     </select>
+                     </select> -->
+                     <input type="text" name="emp_lang_id" id="emp_lang_id" class="form-control" value="{{ old('emp_lang_id') }}" >
+
                      @error('emp_lang_id')
                      <span class="text-danger">{{ $message }}</span>
                      @enderror
@@ -248,14 +224,16 @@
                <div class="col-md-4">
                   <div class="form-group">
                      <label>    الديانة</label>
-                     <select name="religion_id" id="religion_id" class="form-control select2 ">
+                     <!-- <select name="religion_id" id="religion_id" class="form-control select2 ">
                         <option value="">اختر الديانة</option>
                         @if (@isset($other['religions']) && !@empty($other['religions']))
                         @foreach ($other['religions'] as $info )
                         <option @if(old('religion_id')==$info->id) selected="selected" @endif value="{{ $info->id }}"> {{ $info->name }} </option>
                         @endforeach
                         @endif
-                     </select>
+                     </select> -->
+                     <input type="text" name="religion_id" id="religion_id" class="form-control" value="{{ old('religion_id') }}" >
+
                      @error('religion_id')
                      <span class="text-danger">{{ $message }}</span>
                      @enderror
@@ -275,14 +253,16 @@
                <div class="col-md-4">
                   <div class="form-group">
                      <label>    الدول</label>
-                     <select name="country_id" id="country_id" class="form-control select2 ">
+                     <!-- <select name="country_id" id="country_id" class="form-control select2 ">
                         <option value="">اختر الدولة التابع لها الموظف</option>
                         @if (@isset($other['countires']) && !@empty($other['countires']))
                         @foreach ($other['countires'] as $info )
                         <option @if(old('countires')==$info->id) selected="selected" @endif value="{{ $info->id }}"> {{ $info->name }} </option>
                         @endforeach
                         @endif
-                     </select>
+                     </select> -->
+                     <input type="text" name="country_id" id="country_id" class="form-control" value="{{ old('country_id') }}" >
+
                      @error('country_id')
                      <span class="text-danger">{{ $message }}</span>
                      @enderror
@@ -291,10 +271,12 @@
                <div class="col-md-4">
                   <div class="form-group" id="governorates_Div">
                      <label>    المحافظات</label>
-                     <select name="governorates_id" id="governorates_id" class="form-control select2 ">
+                     <!-- <select name="governorates_id" id="governorates_id" class="form-control select2 ">
                         <option value="">اختر المحافظة التابع لها الموظف</option>
                       
-                     </select>
+                     </select> -->
+                     <input type="text" name="governorates_id" id="governorates_id" class="form-control" value="{{ old('governorates_id') }}" >
+
                      @error('governorates_id')
                      <span class="text-danger">{{ $message }}</span>
                      @enderror
@@ -303,10 +285,12 @@
                <div class="col-md-4">
                   <div class="form-group" id="centers_div">
                      <label>    المدينة/المركز</label>
-                     <select name="city_id" id="city_id" class="form-control select2 ">
+                     <!-- <select name="city_id" id="city_id" class="form-control select2 ">
                         <option value="">اختر المدينة التابع لها الموظف</option>
                       
-                     </select>
+                     </select> -->
+                     <input type="text" name="city_id" id="city_id" class="form-control" value="{{ old('city_id') }}" >
+
                      @error('city_id')
                      <span class="text-danger">{{ $message }}</span>
                      @enderror
@@ -353,7 +337,7 @@
                         @endforeach
                         @endif
                      </select>
-                     @error('country_id')
+                     @error('emp_military_id')
                      <span class="text-danger">{{ $message }}</span>
                      @enderror
                   </div>
@@ -449,14 +433,16 @@
                <div class="col-md-4 related_does_has_Driving_License"  style="display: none;">
                   <div class="form-group">
                      <label>  نوع رخصة القيادة</label>
-                     <select name="driving_license_types_id" id="driving_license_types_id" class="form-control select2 ">
+                     <!-- <select name="driving_license_types_id" id="driving_license_types_id" class="form-control select2 ">
                         <option value="">اختر  الحالة </option>
                         @if (@isset($other['driving_license_types']) && !@empty($other['driving_license_types']))
                         @foreach ($other['driving_license_types'] as $info )
                         <option @if(old('driving_license_types_id')==$info->id) selected="selected" @endif value="{{ $info->id }}"> {{ $info->name }} </option>
                         @endforeach
                         @endif
-                     </select>
+                     </select> -->
+                     <input type="text" name="driving_license_types_id" id="driving_license_types_id" class="form-control" value="{{ old('driving_license_types_id') }}" >
+
                      @error('driving_license_types_id')
                      <span class="text-danger">{{ $message }}</span>
                      @enderror
@@ -563,14 +549,16 @@
             <div class="col-md-4">
                <div class="form-group">
                   <label>   الادارة التابع لها الموظف</label>
-                  <select name="emp_Departments_code " id="emp_Departments_code " class="form-control select2 ">
+                  <!-- <select name="emp_Departments_code " id="emp_Departments_code " class="form-control select2 ">
                      <option value="">اختر الادارة</option>
                      @if (@isset($other['departements']) && !@empty($other['departements']))
                      @foreach ($other['departements'] as $info )
                      <option @if(old('departements_id')==$info->id) selected="selected" @endif value="{{ $info->id }}"> {{ $info->name }} </option>
                      @endforeach
                      @endif
-                  </select>
+                  </select> -->
+                  <input type="text" name="departements_id" id="departements_id" class="form-control" value="{{ old('departements_id') }}" >
+
                   @error('departements_id')
                   <span class="text-danger">{{ $message }}</span>
                   @enderror
@@ -580,14 +568,16 @@
             <div class="col-md-4">
                <div class="form-group">
                   <label> وظيفة الموظف</label>
-                  <select name="emp_jobs_id  " id="emp_jobs_id  " class="form-control select2 ">
+                  <!-- <select name="emp_jobs_id  " id="emp_jobs_id  " class="form-control select2 ">
                      <option value="">اختر الوظيفة</option>
                      @if (@isset($other['jobs']) && !@empty($other['jobs']))
                      @foreach ($other['jobs'] as $info )
                      <option @if(old('jobs')==$info->id) selected="selected" @endif value="{{ $info->id }}"> {{ $info->name }} </option>
                      @endforeach
                      @endif
-                  </select>
+                  </select> -->
+                  <input type="text" name="emp_jobs_id" id="emp_jobs_id" class="form-control" value="{{ old('emp_jobs_id') }}" >
+
                   @error('emp_jobs_id')
                   <span class="text-danger">{{ $message }}</span>
                   @enderror
@@ -626,7 +616,7 @@
             <div class="col-md-4 relatedfixced_shift"  @if(old('do_has_shift')!=1) style="display: none;" @endif>
                <div class="form-group">
                   <label>       أنواع الشفتات</label>
-                  <select name="shifts_types_id" id="shifts_types_id" class="form-control select2 ">
+                  <!-- <select name="shifts_types_id" id="shifts_types_id" class="form-control select2 ">
                      <option value="">اختر الشفت</option>
                      @if (@isset($other['shifts_types']) && !@empty($other['shifts_types']))
                      @foreach ($other['shifts_types'] as $info )
@@ -662,7 +652,9 @@
                      </option>
                      @endforeach
                      @endif
-                  </select>
+                  </select> -->
+                  <input type="text" name="shifts_types_id" id="shifts_types_id" class="form-control" value="{{ old('shifts_types_id') }}" >
+
                   @error('shifts_types_id')
                   <span class="text-danger">{{ $message }}</span>
                   @enderror
