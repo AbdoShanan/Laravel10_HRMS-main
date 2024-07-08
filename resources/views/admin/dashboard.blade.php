@@ -3,7 +3,7 @@
 الرئيسية
 @endsection
 @section('contentheader')
-HRMS
+شركة الاسطورة للبرمجيات
 @endsection
 @section('contentheaderactivelink')
 <a href="{{ route('admin.dashboard') }}">   الرئيسية</a>
