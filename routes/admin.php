@@ -22,6 +22,8 @@ use App\Http\Controllers\Admin\TaskController;
 use App\Http\Controllers\Admin\ContractingController;
 use App\Http\Controllers\Admin\AttendanceController;
 use App\Http\Controllers\Admin\AdministrationStaffController;
+use App\Http\Controllers\Admin\AdditionalSalaryController;
+
 
 
 
@@ -132,6 +134,13 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth:admin'], function () {
     Route::get('/Administration_staff/index', [AdministrationStaffController::class, 'index'])->name('Administration_staff.index');
     Route::get('/Administration_staff/create', [AdministrationStaffController::class, 'create'])->name('Administration_staff.create');
     Route::post('/Administration_staff/store', [AdministrationStaffController::class, 'store'])->name('Administration_staff.store');
+
+    
+    /*      انواع الاضافي للراتب    */
+    Route::get('/employees_additional_salary/index', [AdditionalSalaryController::class, 'index'])->name('additional_salary.index');
+    Route::get('/employees_additional_salary/create', [AdditionalSalaryController::class, 'create'])->name('additional_salary.create');
+    Route::post('/employees_additional_salary/store', [AdditionalSalaryController::class, 'store'])->name('additional_salary.store');
+    
 });
 
 

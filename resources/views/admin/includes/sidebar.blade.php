@@ -130,8 +130,8 @@
             @endcan
 
         @can('قائمة شئون الموظفين')
-        <li class="nav-item has-treeview    {{ ( request()->is('admin/Employees*') || request()->is('admin/Administration_staff*')) ? 'menu-open':'' }} ">
-          <a href="#" class="nav-link {{ ( request()->is('admin/Employees*') || request()->is('admin/Administration_staff*') ) ? 'active':'' }} ">
+        <li class="nav-item has-treeview    {{ ( request()->is('admin/Employees*') || request()->is('admin/Administration_staff*') || request()->is('admin/employees_additional_salary*')) ? 'menu-open':'' }} ">
+          <a href="#" class="nav-link {{ ( request()->is('admin/Employees*') || request()->is('admin/Administration_staff*') || request()->is('admin/employees_additional_salary*' )) ? 'active':'' }} ">
             <i class="nav-icon fas fa-tachometer-alt"></i>
             <p>
              قائمة شئون الموظفين
@@ -159,7 +159,7 @@
 
             @can('انواع الاضافي للراتب')
             <li class="nav-item">
-              <a href="{{ route('admin_panel_settings.index') }}" class="nav-link {{ (request()->is('admin/generalSettings*'))?'active':'' }}">
+              <a href="{{ route('additional_salary.index') }}" class="nav-link {{ (request()->is('admin/employees_additional_salary*'))?'active':'' }}">
                 <i class="far fa-circle nav-icon"></i>
                 <p> انواع الاضافي للراتب</p>
               </a>
