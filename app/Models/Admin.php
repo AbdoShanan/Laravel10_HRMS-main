@@ -43,4 +43,9 @@ class Admin extends Authenticatable
     {
         return $this->hasOne(AdditionalSalary::class);
     }
+
+    public function allowanceSalary()
+    {
+        return $this->hasOne(AllowanceSalary::class);
+    }
 }

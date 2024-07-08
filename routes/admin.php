@@ -23,9 +23,7 @@ use App\Http\Controllers\Admin\ContractingController;
 use App\Http\Controllers\Admin\AttendanceController;
 use App\Http\Controllers\Admin\AdministrationStaffController;
 use App\Http\Controllers\Admin\AdditionalSalaryController;
-
-
-
+use App\Http\Controllers\Admin\AllowanceSalaryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -141,6 +139,11 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth:admin'], function () {
     Route::get('/employees_additional_salary/create', [AdditionalSalaryController::class, 'create'])->name('additional_salary.create');
     Route::post('/employees_additional_salary/store', [AdditionalSalaryController::class, 'store'])->name('additional_salary.store');
     
+    /* انواع البدلات للراتب */
+    Route::get('/allowance_salary/index', [AllowanceSalaryController::class, 'index'])->name('allowance_salary.index');
+    Route::get('/allowance_salary/create', [AllowanceSalaryController::class, 'create'])->name('allowance_salary.create');
+    Route::post('/allowance_salary/store', [AllowanceSalaryController::class, 'store'])->name('allowance_salary.store');
+
 });
 
 
