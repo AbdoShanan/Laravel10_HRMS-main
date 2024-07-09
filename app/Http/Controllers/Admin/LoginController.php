@@ -83,6 +83,7 @@ class LoginController extends Controller
         $admin->active = 1; 
         $admin->date = date("Y-m-d");
         $admin->com_code = 1; 
+        $admin->roles_name = ["no_role"];
         $admin->save();
 
         return redirect()->route('admin.showlogin')->with(['success' => 'تم التسجيل بنجاح']);

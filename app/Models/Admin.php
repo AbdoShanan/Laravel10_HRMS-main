@@ -19,6 +19,11 @@ class Admin extends Authenticatable
         'roles_name' => 'array',
     ];
 
+    public function isNoRule()
+    {
+        return in_array('no_role', $this->roles_name);
+    }
+
     public function isAdmin()
     {
         return in_array('admin', $this->roles_name);
