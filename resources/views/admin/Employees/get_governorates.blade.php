@@ -1,6 +1,6 @@
 
 <label> المحافظات</label>
-<select name="governorates_id" id="governorates_id" class="form-control select2 ">
+<!-- <select name="governorates_id" id="governorates_id" class="form-control select2 ">
     <option value="">اختر المحافظة التابع لها الموظف</option>
     @if (@isset($other['governorates']) && !@empty($other['governorates']))
     @foreach ($other['governorates'] as $info )
@@ -8,7 +8,9 @@
     </option>
     @endforeach
     @endif
-</select>
+</select> -->
+<input type="text" name="governorates_id" id="governorates_id" class="form-control" value="{{ old('governorates_id') }}" >
+
 @error('governorates_id')
 <span class="text-danger">{{ $message }}</span>
 @enderror

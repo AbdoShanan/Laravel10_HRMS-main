@@ -55,18 +55,19 @@
           <br>
             <div class="row">
          
-               <div class="col-md-4">
-                  <div class="form-group">
-                     <label>    اسم الموظف  كاملا</label>
-                     <input type="text" name="emp_name" id="emp_name" class="form-control" value="{{ old('emp_name') }}" >
-                     @error('emp_name')
-                     <span class="text-danger">{{ $message }}</span> 
-                     @enderror
-                  </div>
+            <div class="col-md-4">
+               <div class="form-group">
+                  <label for="emp_name">اسم الموظف كاملا <span class="text-danger"> * </span></label>
+                  <input type="text" name="emp_name" id="emp_name" class="form-control @error('emp_name') is-invalid @enderror" value="{{ old('emp_name') }}">
+                  @error('emp_name')
+                  <div class="invalid-feedback">{{ $message }}</div>
+                  @enderror
                </div>
+            </div>
+
                <div class="col-md-4">
                   <div class="form-group">
-                     <label>  نوع الجنس</label>
+                     <label>  نوع الجنس <span class="text-danger"> * </span></label>
                      <select  name="emp_gender" id="emp_gender" class="form-control">
                      <option   @if(old('emp_gender')==1) selected @endif  value="1">ذكر</option>
                      <option @if(old('emp_gender')==2 ) selected @endif value="1">انثي</option>
@@ -78,20 +79,24 @@
                </div>
                <div class="col-md-4">
                   <div class="form-group">
-                     <label>   الفرع التابع له الموظف</label>
-                     <input type="text" name="branch_id" id="branch_id" class="form-control" value="{{ old('branch_id') }}" >
-                     @error('branch_id')
+                     <label>   الفرع التابع له الموظف <span class="text-danger"> * </span></label>
+                  <select name="branch_id" id="branch_id" class="form-control select2 ">
+                     <option value="">اختر الفرع التابع له الموظف</option>
+                     @if (@isset($other['branches']) && !@empty($other['branches']))
+                     @foreach ($other['branches'] as $info )
+                     <option @if(old('branches')==$info->id) selected="selected" @endif value="{{ $info->id }}"> {{ $info->name }} </option>
+                     @endforeach
+                     @endif
+                  </select>
+                  @error('branch_id')
                      <span class="text-danger">{{ $message }}</span>
                      @enderror
                   </div>
                </div>
 
-
-   
-
                <div class="col-md-4">
                   <div class="form-group">
-                     <label>  المؤهل الدراسي</label>
+                     <label>  المؤهل الدراسي <span class="text-danger"> * </span></label>
                      <input type="text" name="Qualifications_id" id="Qualifications_id" class="form-control" value="{{ old('Qualifications_id') }}" >
 
                      @error('Qualifications_id')
@@ -101,7 +106,7 @@
                </div>
                <div class="col-md-4">
                   <div class="form-group">
-                     <label>       سنة التخرج</label>
+                     <label>       سنة التخرج <span class="text-danger"> * </span></label>
                      <input type="text" name="Qualifications_year" id="Qualifications_year" class="form-control" value="{{ old('Qualifications_year') }}" >
                      @error('Qualifications_year')
                      <span class="text-danger">{{ $message }}</span> 
@@ -150,7 +155,7 @@
 
                <div class="col-md-4">
                   <div class="form-group">
-                     <label>         رقم بطاقة الهوية</label>
+                     <label>         رقم بطاقة الهوية <span class="text-danger"> * </span></label>
                      <input type="text" name="emp_national_idenity" id="emp_national_idenity" class="form-control" value="{{ old('emp_national_idenity') }}" >
                      @error('emp_national_idenity')
                      <span class="text-danger">{{ $message }}</span> 
@@ -187,7 +192,7 @@
                </div>
                <div class="col-md-4">
                   <div class="form-group">
-                     <label>    الجنسية</label>
+                     <label>    الجنسية <span class="text-danger"> * </span></label>
                      <!-- <select name="emp_nationality_id" id="emp_nationality_id" class="form-control select2 ">
                         <option value="">اختر الجنسية</option>
                         @if (@isset($other['nationalities']) && !@empty($other['nationalities']))
@@ -242,7 +247,7 @@
 
                <div class="col-md-4">
                   <div class="form-group">
-                     <label>      البريد الالكتروني</label>
+                     <label>      البريد الالكتروني <span class="text-danger"> * </span></label>
                      <input type="text" name="emp_email" id="emp_email" class="form-control" value="{{ old('emp_email') }}" >
                      @error('emp_email')
                      <span class="text-danger">{{ $message }}</span> 
@@ -275,9 +280,9 @@
                         <option value="">اختر المحافظة التابع لها الموظف</option>
                       
                      </select> -->
-                     <input type="text" name="governorates_id" id="governorates_id" class="form-control" value="{{ old('governorates_id') }}" >
+                     <input type="text" name="governorate_id" id="governorate_id" class="form-control" value="{{ old('governorate_id') }}" >
 
-                     @error('governorates_id')
+                     @error('governorate_id')
                      <span class="text-danger">{{ $message }}</span>
                      @enderror
                   </div>
@@ -328,7 +333,7 @@
 
                <div class="col-md-4">
                   <div class="form-group">
-                     <label>    حالة الخدمة العسكرية</label>
+                     <label>    حالة الخدمة العسكرية <span class="text-danger"> * </span></label>
                      <select name="emp_military_id" id="emp_military_id" class="form-control select2 ">
                         <option value="">اختر  الحالة </option>
                         @if (@isset($other['military_status']) && !@empty($other['military_status']))
@@ -367,8 +372,8 @@
                <div class="col-md-4 related_miltary_1"  style="display: none;">
                   <div class="form-group">
                      <label>     سلاح الخدمة العسكرية	</label>
-                     <input type="text" name="emp_military_wepon	" id="emp_military_wepon	" class="form-control" value="{{ old('emp_military_wepon') }}" >
-                     @error('emp_military_wepon	')
+                     <input type="text" name="emp_military_wepon" id="emp_military_wepon" class="form-control" value="{{ old('emp_military_wepon') }}" >
+                     @error('emp_military_wepon')
                      <span class="text-danger">{{ $message }}</span> 
                      @enderror
                   </div>
@@ -408,7 +413,7 @@
 
                <div class="col-md-4">
                   <div class="form-group">
-                     <label>    هل يمتلك رخصة قيادة</label>
+                     <label>    هل يمتلك رخصة قيادة <span class="text-danger"> * </span></label>
                      <select  name="does_has_Driving_License" id="does_has_Driving_License" class="form-control">
                         <option value="">  اختر الحالة</option>
                      <option   @if(old('graduation_estimate')==1) selected @endif  value="1">نعم </option>
@@ -451,7 +456,7 @@
 
                <div class="col-md-4">
                   <div class="form-group">
-                     <label>    هل يمتلك  أقارب بالعمل </label>
+                     <label>    هل يمتلك  أقارب بالعمل  <span class="text-danger"> * </span></label>
                      <select  name="has_Relatives" id="has_Relatives" class="form-control">
                         <option value="">  اختر الحالة</option>
                      <option   @if(old('has_Relatives')==1) selected @endif  value="1">نعم </option>
@@ -479,7 +484,7 @@
 
                <div class="col-md-4">
                   <div class="form-group">
-                     <label>    هل يمتلك اعاقة / عمليات سابقة </label>
+                     <label>    هل يمتلك اعاقة / عمليات سابقة <span class="text-danger"> * </span></label>
                      <select  name="is_Disabilities_processes" id="is_Disabilities_processes" class="form-control">
                         <option value="">  اختر الحالة</option>
                      <option   @if(old('is_Disabilities_processes')==1) selected @endif  value="1">نعم </option>
@@ -525,7 +530,7 @@
             <div class="row">
             <div class="col-md-4 " >
                <div class="form-group">
-                  <label>   تاريخ التعيين</label>
+                  <label>   تاريخ التعيين <span class="text-danger"> * </span></label>
                   <input type="date" name="emp_start_date" id="emp_start_date" class="form-control" value="{{ old('emp_start_date') }}" >
                   @error('emp_start_date')
                   <span class="text-danger">{{ $message }}</span> 
@@ -548,8 +553,8 @@
             </div>
             <div class="col-md-4">
                <div class="form-group">
-                  <label>   الادارة التابع لها الموظف</label>
-                  <!-- <select name="emp_Departments_code " id="emp_Departments_code " class="form-control select2 ">
+                  <label>   الادارة التابع لها الموظف <span class="text-danger"> * </span></label>
+                  <!-- <select name="emp_Departments_code" id="emp_Departments_code" class="form-control select2 ">
                      <option value="">اختر الادارة</option>
                      @if (@isset($other['departements']) && !@empty($other['departements']))
                      @foreach ($other['departements'] as $info )
@@ -557,9 +562,9 @@
                      @endforeach
                      @endif
                   </select> -->
-                  <input type="text" name="departements_id" id="departements_id" class="form-control" value="{{ old('departements_id') }}" >
+                  <input type="text" name="emp_Departments_code" id="emp_Departments_code" class="form-control" value="{{ old('emp_Departments_code') }}" >
 
-                  @error('departements_id')
+                  @error('emp_Departments_code')
                   <span class="text-danger">{{ $message }}</span>
                   @enderror
                </div>
@@ -567,7 +572,7 @@
 
             <div class="col-md-4">
                <div class="form-group">
-                  <label> وظيفة الموظف</label>
+                  <label> وظيفة الموظف <span class="text-danger"> * </span></label>
                   <!-- <select name="emp_jobs_id  " id="emp_jobs_id  " class="form-control select2 ">
                      <option value="">اختر الوظيفة</option>
                      @if (@isset($other['jobs']) && !@empty($other['jobs']))
@@ -613,6 +618,7 @@
                </div>
             </div>
 
+
             <div class="col-md-4 relatedfixced_shift"  @if(old('do_has_shift')!=1) style="display: none;" @endif>
                <div class="form-group">
                   <label>       أنواع الشفتات</label>
@@ -653,9 +659,9 @@
                      @endforeach
                      @endif
                   </select> -->
-                  <input type="text" name="shifts_types_id" id="shifts_types_id" class="form-control" value="{{ old('shifts_types_id') }}" >
+                  <input type="text" name="shift_type_id" id="shift_type_id" class="form-control" value="{{ old('shift_type_id') }}" >
 
-                  @error('shifts_types_id')
+                  @error('shift_type_id')
                   <span class="text-danger">{{ $message }}</span>
                   @enderror
                </div>
@@ -671,7 +677,7 @@
             </div>
             <div class="col-md-4" >
                <div class="form-group">
-                  <label>     راتب الموظف الشهري</label>
+                  <label>     راتب الموظف الشهري <span class="text-danger"> * </span></label>
                   <input type="text" name="emp_sal" id="emp_sal" oninput="this.value=this.value.replace(/[^0-9.]/g,'');" class="form-control" value="{{ old('emp_sal') }}" >
                   @error('emp_sal')
                   <span class="text-danger">{{ $message }}</span> 
@@ -681,7 +687,7 @@
 
             <div class="col-md-4">
                <div class="form-group">
-                  <label>  هل  له حافز </label>
+                  <label>  هل  له حافز <span class="text-danger"> * </span></label>
                   <select  name="MotivationType" id="MotivationType" class="form-control">
                      <option value="">اختر الحالة</option>
                   <option   @if(old('MotivationType')==1) selected @endif  value="1">ثابت</option>
@@ -707,7 +713,7 @@
 
             <div class="col-md-4">
                <div class="form-group">
-                  <label>  هل  له تأمين اجتماعي </label>
+                  <label>  هل  له تأمين اجتماعي <span class="text-danger"> * </span></label>
                   <select  name="isSocialnsurance" id="isSocialnsurance" class="form-control">
                      <option value="">اختر الحالة</option>
                   <option   @if(old('isSocialnsurance')==1) selected @endif  value="1">نعم</option>
@@ -741,7 +747,7 @@
 
             <div class="col-md-4">
                <div class="form-group">
-                  <label>  هل  له تأمين طبي </label>
+                  <label>  هل  له تأمين طبي <span class="text-danger"> * </span> </label>
                   <select  name="ismedicalinsurance" id="ismedicalinsurance" class="form-control">
                      <option value="">اختر الحالة</option>
                   <option   @if(old('ismedicalinsurance')==1) selected @endif  value="1">نعم</option>
@@ -774,7 +780,7 @@
             </div>
             <div class="col-md-4">
                <div class="form-group">
-                  <label> نوع صرف راتب الموظف</label>
+                  <label> نوع صرف راتب الموظف <span class="text-danger"> * </span></label>
                   <select  name="sal_cach_or_visa" id="sal_cach_or_visa" class="form-control">
                      <option value="">اختر الحالة</option>
                   <option   @if(old('sal_cach_or_visa')==1) selected @endif  value="1">كاش</option>
@@ -789,7 +795,7 @@
 
             <div class="col-md-4">
                <div class="form-group">
-                  <label> هل له رصيد اجازات سنوي</label>
+                  <label> هل له رصيد اجازات سنوي <span class="text-danger"> * </span></label>
                   <select  name="is_active_for_Vaccation" id="is_active_for_Vaccation" class="form-control">
                      <option value="">اختر الحالة</option>
                   <option   @if(old('is_active_for_Vaccation')==1) selected @endif  value="1">نعم</option>
@@ -810,10 +816,20 @@
                   <span class="text-danger">{{ $message }}</span> 
                   @enderror
                </div>
+               </div>
+            <div class="col-md-4">
+               <div class="form-group">
+                  <label> الحاله الاجتماعية</label>
+                  <input type="text" name="emp_social_status_id" id="emp_social_status_id"  class="form-control" value="{{ old('emp_social_status_id') }}" >
+                  @error('emp_social_status_id')
+                  <span class="text-danger">{{ $message }}</span> 
+                  @enderror
+               </div>
             </div>
 
          </div>
          </div>
+
           <div class="tab-pane fade" id="custom-content-addtional_data" role="tabpanel" aria-labelledby="addtional_data">
             <br>
             <div class="row">

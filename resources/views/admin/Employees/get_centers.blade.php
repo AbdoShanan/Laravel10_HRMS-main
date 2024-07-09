@@ -1,6 +1,6 @@
 
 <label>    المدينة/المركز</label>
-<select name="city_id" id="city_id" class="form-control select2 ">
+<!-- <select name="city_id" id="city_id" class="form-control select2 ">
   <option value="">اختر المدينة التابع لها الموظف</option>
   @if (@isset($other['centers']) && !@empty($other['centers']))
     @foreach ($other['centers'] as $info )
@@ -8,7 +8,10 @@
     </option>
     @endforeach
     @endif
-</select>
+</select> -->
+
+<input type="text" name="city_id" id="city_id" class="form-control" value="{{ old('city_id') }}" >
+
 @error('city_id')
 <span class="text-danger">{{ $message }}</span>
 @enderror

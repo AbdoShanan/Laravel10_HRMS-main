@@ -19,6 +19,7 @@ use App\Models\Military_status;
 use App\Models\driving_license_type;
 use App\Models\Language;
 use App\Models\Shifts_type;
+use App\Http\Requests\StoreEmployeeRequest;
 
 class EmployeesController extends Controller
 {
@@ -46,6 +47,32 @@ class EmployeesController extends Controller
 
         return view("admin.Employees.create", ['other' => $other]);
     }
+
+    public function store(StoreEmployeeRequest $request)
+    {
+        $validated = $request->validated();
+        $employee = new Employee();
+        $employee->fill($validated); 
+        $employee->added_by = auth()->user()->id;
+        $employee->com_code = auth()->user()->com_code;
+        $employee->Motivation = $employee->Motivation ?? 0;
+    
+        if ($request->hasFile('emp_photo')) {
+            $photoPath = $request->file('emp_photo')->store('photos', 'public');
+            $employee->emp_photo = $photoPath;
+        }
+    
+        if ($request->hasFile('emp_CV')) {
+            $cvPath = $request->file('emp_CV')->store('cvs', 'public');
+            $employee->emp_CV = $cvPath;
+        }
+    
+        $employee->save();
+    
+        return redirect()->route('Employees.index')->with('success', 'تم إضافة الموظف بنجاح.');
+    }
+    
+
     public function get_governorates(Request $request)
     {
         if ($request->ajax()) {
