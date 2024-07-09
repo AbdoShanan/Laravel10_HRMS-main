@@ -18,9 +18,11 @@
 <div class="col-12">
     <div class="card">
         <div class="card-header">
+        @if ((auth()->user()->isAdmin() || auth()->user()->isSuperAdmin() || auth()->user()->isManager()))
             <h3 class="card-title card_title_center">بيانات الموظفين
                 <a href="{{ route('Employees.create') }}" class="btn btn-sm btn-success">اضافة جديد</a>
             </h3>
+        @endif
         </div>
         <div class="card-body" id="ajax_responce_serachDiv">
             @if($data->count() > 0)
