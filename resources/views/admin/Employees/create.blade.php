@@ -65,6 +65,27 @@
                </div>
             </div>
 
+            <div class="col-md-4">
+               <div class="form-group">
+               <label for="password">رقم المرور <span class="text-danger"> * </span></label>
+               <input type="password" name="password" id="password" class="form-control" required>
+                  @error('password')
+                     <span class="text-danger">{{ $message }}</span> 
+                  @enderror
+               </div>
+            </div>
+
+         <div class="col-md-4">
+            <div class="form-group">
+                  <label for="password_confirmation">تأكيد رقم المرور <span class="text-danger"> * </span></label>
+                  <input type="password" name="password_confirmation" id="password_confirmation" class="form-control" required>
+                  @error('password_confirmation')
+                     <span class="text-danger">{{ $message }}</span> 
+                  @enderror
+            </div>
+         </div>
+
+
                <div class="col-md-4">
                   <div class="form-group">
                      <label>  نوع الجنس <span class="text-danger"> * </span></label>
