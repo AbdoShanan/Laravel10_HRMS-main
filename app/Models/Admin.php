@@ -12,7 +12,7 @@ class Admin extends Authenticatable
     use HasFactory, HasRoles;
 
     protected $fillable = [
-        'name', 'email', 'username', 'password', 'added_by', 'updated_by', 'active', 'date', 'com_code', 'roles_name'
+        'name', 'email', 'username', 'password', 'added_by', 'updated_by', 'active', 'date', 'com_code', 'roles_name' ,'employee_id'
     ];
 
     protected $casts = [

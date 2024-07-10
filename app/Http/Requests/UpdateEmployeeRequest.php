@@ -3,8 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class StoreEmployeeRequest extends FormRequest
+class UpdateEmployeeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +25,8 @@ class StoreEmployeeRequest extends FormRequest
     public function rules()
     {
         return [
-            'emp_name' => 'required|string|max:255',
             'password' => 'required|confirmed|min:6',
+            'emp_name' => 'required|string|max:255',
             'emp_gender' => 'required|in:1,2',
             'branch_id' => 'required|exists:branches,id',
             'Qualifications_id' => 'required|string|max:255',
@@ -33,13 +34,22 @@ class StoreEmployeeRequest extends FormRequest
             'graduation_estimate' => 'nullable|in:1,2,3,4,5',
             'Graduation_specialization' => 'nullable|string|max:255',
             'brith_date' => 'nullable|date',
-            'emp_national_idenity' => 'required|string|max:50|unique:employees,emp_national_idenity',
+            'emp_national_idenity' => [
+                'required',
+                'string',
+                'max:50',
+                Rule::unique('employees', 'emp_national_idenity')->ignore($this->route('id')),
+            ],        
             'emp_identityPlace' => 'nullable|string|max:255',
             'emp_end_identityIDate' => 'nullable|date',
             'blood_group_id' => 'nullable|string|max:255',
             'religion_id' => 'nullable|string|max:255',
             'emp_lang_id' => 'nullable|string|max:255',
-            'emp_email' => 'required|email|unique:employees,emp_email',
+            'emp_email' => [
+                'required',
+                'email',
+                Rule::unique('employees', 'emp_email')->ignore($this->route('id')),
+            ],            
             'country_id' => 'nullable|string|max:255',
             'governorate_id' => 'nullable|string|max:255',
             'city_id' => 'nullable|string|max:255',

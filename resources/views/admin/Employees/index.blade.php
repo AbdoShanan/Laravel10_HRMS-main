@@ -40,7 +40,9 @@
                             <th>الصورة</th>
                             <th>تمت الإضافة بواسطة</th>
                             <th>تم التحديث بواسطة</th>
+                            @if ((auth()->user()->isAdmin() || auth()->user()->isSuperAdmin() || auth()->user()->isManager()))
                             <th>الإجراءات</th>
+                            @endif
                         </tr>
                     </thead>
                     <tbody>
@@ -88,10 +90,12 @@
                                     لايوجد
                                 @endif
                             </td>
+                            @if ((auth()->user()->isAdmin() || auth()->user()->isSuperAdmin() || auth()->user()->isManager()))
                             <td>
                                 <a href="{{ route('Employees.edit', $info->id) }}" class="btn btn-success btn-sm">تعديل</a>
                                 <a href="{{ route('Employees.destroy', $info->id) }}" class="btn are_you_shur btn-danger btn-sm">حذف</a>
                             </td>
+                            @endif
                         </tr>
                         @endforeach
                     </tbody>

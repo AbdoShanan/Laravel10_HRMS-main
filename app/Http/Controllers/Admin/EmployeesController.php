@@ -20,13 +20,25 @@ use App\Models\driving_license_type;
 use App\Models\Language;
 use App\Models\Shifts_type;
 use App\Http\Requests\StoreEmployeeRequest;
+use App\Http\Requests\UpdateEmployeeRequest;
+use Illuminate\Support\Facades\Hash;
+use App\Models\Admin;
+use DB;
 
 class EmployeesController extends Controller
 {
     public function index()
     {
         $com_code = auth()->user()->com_code;
-        $data = get_cols_where_p(new Employee(), array("*"), array("com_code" => $com_code), "id", "DESC", PC);
+        if (auth()->user()->isAdmin() || auth()->user()->isSuperAdmin() || auth()->user()->isManager()) {
+
+            $data = get_cols_where_p(new Employee(), array("*"), array("com_code" => $com_code), "id", "DESC", PC);
+
+        } else {
+
+            $data = get_cols_where(new Employee(), array("*"), array("com_code" => $com_code,"id"=>auth()->user()->employee_id), "id", "DESC", PC);
+        }
+
         return view("admin.Employees.index", ['data' => $data]);
     }
     public function create()
@@ -50,26 +62,48 @@ class EmployeesController extends Controller
 
     public function store(StoreEmployeeRequest $request)
     {
-        $validated = $request->validated();
-        $employee = new Employee();
-        $employee->fill($validated); 
-        $employee->added_by = auth()->user()->id;
-        $employee->com_code = auth()->user()->com_code;
-        $employee->Motivation = $employee->Motivation ?? 0;
+        try {
+            $validated = $request->validated();
+            $employee = new Employee();
+            $employee->fill($validated); 
+            $employee->added_by = auth()->user()->id;
+            $employee->com_code = auth()->user()->com_code;
+            $employee->password = Hash::make($request->password);
+            $employee->Motivation = $employee->Motivation ?? 0;
+        
+            if ($request->hasFile('emp_photo')) {
+                $photoPath = $request->file('emp_photo')->store('photos', 'public');
+                $employee->emp_photo = $photoPath;
+            }
+        
+            if ($request->hasFile('emp_CV')) {
+                $cvPath = $request->file('emp_CV')->store('cvs', 'public');
+                $employee->emp_CV = $cvPath;
+            }
+        
+            $employee->save();
     
-        if ($request->hasFile('emp_photo')) {
-            $photoPath = $request->file('emp_photo')->store('photos', 'public');
-            $employee->emp_photo = $photoPath;
+            // Insert new record in admins table
+            $user = Admin::create([
+                'name'        => $request->emp_name,
+                'employee_id' => $employee->id,
+                'email'       => $request->emp_email,
+                'username'    => $request->emp_name,
+                'roles_name'  => ["no_role"], 
+                'password'    => Hash::make($request->password),
+                'added_by'    => auth()->user()->added_by,
+                'updated_by'  => auth()->user()->updated_by, 
+                'active'      => 1, 
+                'date'        => date("Y-m-d"),
+                'com_code'    => auth()->user()->com_code, 
+            ]);
+    
+            $user->assignRole($request->input('roles_name')); 
+    
+            return redirect()->route('Employees.index')->with('success', 'تم إضافة الموظف بنجاح.');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'حدث خطأ أثناء إضافة الموظف: ' . $e->getMessage());
         }
-    
-        if ($request->hasFile('emp_CV')) {
-            $cvPath = $request->file('emp_CV')->store('cvs', 'public');
-            $employee->emp_CV = $cvPath;
-        }
-    
-        $employee->save();
-    
-        return redirect()->route('Employees.index')->with('success', 'تم إضافة الموظف بنجاح.');
     }
     
 
@@ -89,5 +123,94 @@ class EmployeesController extends Controller
             $other['centers'] = get_cols_where(new centers(), array("id", "name"), array("com_code" => auth()->user()->com_code, 'governorates_id' => $governorates_id));
             return view('admin.Employees.get_centers',['other'=>$other]);
         }
+    }
+
+    public function edit($id)
+    {
+        $employee = Employee::find($id);
+        if (!$employee)
+        {
+            return redirect()->route('Employees.index')
+            ->with('error','هذا الموظف غير موجود !');
+        }
+        $com_code = auth()->user()->com_code;
+        $other['branches'] = get_cols_where(new Branche(), array("id", "name"), array("com_code" => $com_code, "active" => 1));
+        $other['military_status'] = get_cols_where(new Military_status(), array("id", "name"), array("active" => 1),'id','ASC');
+
+
+        return view ('admin.Employees.edit', compact("employee","other"));
+    }
+
+    public function update(UpdateEmployeeRequest $request, $id)
+    {
+        try {
+            $employee = Employee::find($id);
+            if (!$employee) {
+                return redirect()->route('Employees.index')
+                    ->with('error', 'هذا الموظف غير موجود !');
+            }
+    
+            $validated = $request->validated();
+            $employee->fill($validated);
+    
+            $employee->updated_by = auth()->user()->id;
+            $employee->com_code = auth()->user()->com_code;
+    
+            if ($request->filled('password')) {
+                $employee->password = Hash::make($request->password);
+            }
+    
+            if ($request->hasFile('emp_photo')) {
+                $photoPath = $request->file('emp_photo')->store('photos', 'public');
+                $employee->emp_photo = $photoPath;
+            }
+    
+            if ($request->hasFile('emp_CV')) {
+                $cvPath = $request->file('emp_CV')->store('cvs', 'public');
+                $employee->emp_CV = $cvPath;
+            }
+    
+            $employee->save();
+    
+            // Update  Admin record for this employee
+            $admin = Admin::where('employee_id', $employee->id)->first();
+            if ($admin) {
+                $admin->name = $request->emp_name;
+                $admin->username = $request->emp_name;
+                $admin->added_by = auth()->user()->id;
+                $admin->updated_by = auth()->user()->id;
+                $admin->active = 1;
+                $admin->date = date("Y-m-d");
+                $admin->com_code = auth()->user()->com_code;
+
+                if ($request->filled('password')) {
+                    $admin->password = Hash::make($request->password);
+                }
+    
+                $admin->save();
+    
+            }
+    
+            return redirect()->route('Employees.index')->with('success', 'تم تعديل الموظف بنجاح.');
+    
+        } catch (\Exception $e) {
+            return redirect()->route('Employees.index')->with('error', 'حدث خطأ أثناء تعديل الموظف: ' . $e->getMessage());
+        }
+    }
+    
+    
+
+
+    public function destroy($id)
+    {
+        $employee = Employee::find($id);
+        if (!$employee)
+        {
+            return redirect()->route('Employees.index')
+            ->with('error','هذا الموظف غير موجود !');
+        }
+        $employee->delete();
+        return redirect()->route('Employees.index')
+        ->with('success','تم الحذف بنجاح');
     }
 }

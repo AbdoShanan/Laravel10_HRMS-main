@@ -21,9 +21,9 @@ orderby($order_field, $order_type)->paginate($pagination_counter);
 return $data;
 }
 /*get some cols  table */
-function get_cols_where($model=null, $columns_names = array(), $where = array(), $order_field="id",$order_type="DESC")
+function get_cols_where($model=null, $columns_names = array(), $where = array(), $order_field="id",$order_type="DESC",$pagination_counter=13)
 {
-$data = $model::select($columns_names)->where($where)->orderby($order_field, $order_type)->get();
+$data = $model::select($columns_names)->where($where)->orderby($order_field, $order_type)->paginate($pagination_counter);
 return $data;
 }
 /*get some cols  table */
